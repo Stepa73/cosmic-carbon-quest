@@ -9,15 +9,59 @@ interface GalaxyViewProps {
 }
 
 export const GalaxyView: React.FC<GalaxyViewProps> = ({ gameState, updateGameState }) => {
-  const handleSectorClick = (sectorId: string) => {
-    const sector = gameState.sectors.find(s => s.id === sectorId);
-    if (!sector || !sector.scanned) return;
-
-    const updatedSectors = gameState.sectors.map(s => 
-      s.id === sectorId ? { ...s, marked: !s.marked } : s
-    );
+  const handleSectorClick = (sectorX: number, sectorY: number) => {
+    const sector = gameState.sectors.find(s => s.x === sectorX && s.y === sectorY);
     
-    updateGameState({ sectors: updatedSectors });
+    // If sector doesn't exist or isn't discovered, scan it
+    if (!sector || !sector.discovered) {
+      if (gameState.energy < 10) return; // Not enough energy
+      
+      updateGameState({
+        energy: gameState.energy - 10,
+        scanningX: sectorX,
+        scanningY: sectorY,
+        telescope: { ...gameState.telescope, scanning: true, scanProgress: 0 }
+      });
+      
+      // Simulate scanning
+      setTimeout(() => {
+        const distance = Math.max(Math.abs(sectorX), Math.abs(sectorY));
+        const accuracy = Math.max(0.3, gameState.telescope.accuracy / 100 - distance * 0.05);
+        const actualDensity = Math.random() * 100;
+        const measuredDensity = actualDensity + (Math.random() - 0.5) * (100 - accuracy * 100);
+        
+        const newSector = {
+          id: `${sectorX},${sectorY}`,
+          x: sectorX,
+          y: sectorY,
+          carbonDensity: Math.max(0, Math.min(100, measuredDensity)),
+          scanned: true,
+          marked: false,
+          mining: false,
+          depth: Math.random() * 100,
+          discovered: true
+        };
+        
+        const updatedSectors = sector 
+          ? gameState.sectors.map(s => s.id === newSector.id ? newSector : s)
+          : [...gameState.sectors, newSector];
+        
+        updateGameState({
+          sectors: updatedSectors,
+          telescope: { ...gameState.telescope, scanning: false, scanProgress: 100 }
+        });
+      }, 2000);
+      
+      return;
+    }
+    
+    // If sector is scanned, toggle marking
+    if (sector.scanned) {
+      const updatedSectors = gameState.sectors.map(s => 
+        s.id === sector.id ? { ...s, marked: !s.marked } : s
+      );
+      updateGameState({ sectors: updatedSectors });
+    }
   };
 
   const getSectorColor = (sector: any) => {
@@ -45,26 +89,43 @@ export const GalaxyView: React.FC<GalaxyViewProps> = ({ gameState, updateGameSta
   return (
     <div className="space-y-6">
       <Card className="p-6">
-        <h2 className="text-2xl font-bold text-foreground mb-4">Galaxy Map</h2>
-        <p className="text-muted-foreground mb-6">
-          Click on scanned sectors to mark them for mining. Brighter areas indicate higher carbon density.
-        </p>
+        <div className="flex justify-between items-start mb-4">
+          <div>
+            <h2 className="text-2xl font-bold text-foreground">Galaxy Map</h2>
+            <p className="text-muted-foreground">
+              Click on tiles to scan or mark them for mining. Brighter areas indicate higher carbon density.
+            </p>
+          </div>
+          <div className="text-right">
+            <div className="text-sm text-muted-foreground">Energy: {gameState.energy}/100</div>
+            <div className="text-sm text-muted-foreground">Scan Cost: 10 Energy</div>
+            {gameState.telescope.scanning && (
+              <div className="text-scanner-beam animate-pulse">Scanning...</div>
+            )}
+          </div>
+        </div>
         
-        <div className="grid grid-cols-15 gap-1 max-w-4xl mx-auto">
+        <div className="grid gap-1 max-w-4xl mx-auto" style={{ gridTemplateColumns: 'repeat(15, minmax(0, 1fr))' }}>
           {Array.from({ length: 15 }, (_, y) => 
             Array.from({ length: 15 }, (_, x) => {
               const sectorX = x - 7;
               const sectorY = 7 - y;
               const sector = visibleSectors.find(s => s.x === sectorX && s.y === sectorY);
+              const isScanning = gameState.telescope.scanning && gameState.scanningX === sectorX && gameState.scanningY === sectorY;
               
               return (
                 <button
                   key={`${sectorX},${sectorY}`}
                   className={`w-6 h-6 border border-border/20 rounded-sm transition-all duration-300 hover:scale-110 ${
+                    isScanning ? 'bg-scanner-beam animate-pulse' :
                     sector ? getSectorColor(sector) : 'bg-space-void'
                   } ${sector?.marked ? 'ring-2 ring-energy-core' : ''}`}
-                  onClick={() => sector && handleSectorClick(sector.id)}
-                  title={sector ? `Sector ${sector.x},${sector.y} - Carbon: ${Math.floor(sector.carbonDensity)}%` : 'Unknown sector'}
+                  onClick={() => handleSectorClick(sectorX, sectorY)}
+                  title={
+                    isScanning ? 'Scanning...' :
+                    sector ? `Sector ${sector.x},${sector.y} - Carbon: ${Math.floor(sector.carbonDensity)}%` : 
+                    'Click to scan'
+                  }
                 />
               );
             })

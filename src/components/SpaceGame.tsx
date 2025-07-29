@@ -98,13 +98,6 @@ export const SpaceGame = () => {
         🌌 Galaxy
       </Button>
       <Button 
-        variant={gameState.currentView === 'telescope' ? 'default' : 'secondary'}
-        onClick={() => updateGameState({ currentView: 'telescope' })}
-        className="flex items-center gap-2"
-      >
-        🔭 Telescope
-      </Button>
-      <Button 
         variant={gameState.currentView === 'rockets' ? 'default' : 'secondary'}
         onClick={() => updateGameState({ currentView: 'rockets' })}
         className="flex items-center gap-2"
@@ -132,8 +125,6 @@ export const SpaceGame = () => {
     switch (gameState.currentView) {
       case 'galaxy':
         return <GalaxyView gameState={gameState} updateGameState={updateGameState} />;
-      case 'telescope':
-        return <TelescopeView gameState={gameState} updateGameState={updateGameState} />;
       case 'rockets':
         return <RocketView gameState={gameState} updateGameState={updateGameState} />;
       case 'market':
