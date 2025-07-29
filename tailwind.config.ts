@@ -24,6 +24,15 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				
+				/* Space game color palette */
+				'space-void': 'hsl(var(--space-void))',
+				'space-deep': 'hsl(var(--space-deep))',
+				'space-nebula': 'hsl(var(--space-nebula))',
+				'carbon-glow': 'hsl(var(--carbon-glow))',
+				'scanner-beam': 'hsl(var(--scanner-beam))',
+				'rocket-flame': 'hsl(var(--rocket-flame))',
+				'energy-core': 'hsl(var(--energy-core))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
@@ -70,25 +79,42 @@ export default {
 			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' }
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' }
+				},
+				'pulse-glow': {
+					'0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+					'50%': { opacity: '0.8', transform: 'scale(1.05)' }
+				},
+				'scan-beam': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' }
+				},
+				'carbon-sparkle': {
+					'0%, 100%': { opacity: '0.3' },
+					'50%': { opacity: '1' }
+				},
+				'rocket-launch': {
+					'0%': { transform: 'translateY(0) scale(1)', opacity: '1' },
+					'100%': { transform: 'translateY(-200px) scale(0.5)', opacity: '0' }
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-10px)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+				'scan-beam': 'scan-beam 3s linear infinite',
+				'carbon-sparkle': 'carbon-sparkle 1.5s ease-in-out infinite',
+				'rocket-launch': 'rocket-launch 2s ease-out forwards',
+				'float': 'float 3s ease-in-out infinite'
 			}
 		}
 	},

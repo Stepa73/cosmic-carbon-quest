@@ -2,39 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Space Explorer Game Design System - Deep Space Theme
+All colors MUST be HSL for cosmic atmosphere.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Deep space background gradients */
+    --space-void: 240 15% 5%;
+    --space-deep: 250 20% 8%;
+    --space-nebula: 260 25% 12%;
+    
+    /* Cosmic accent colors */
+    --carbon-glow: 180 100% 70%;
+    --scanner-beam: 200 80% 60%;
+    --rocket-flame: 25 95% 65%;
+    --energy-core: 280 90% 75%;
+    
+    /* UI colors */
+    --background: 240 15% 5%;
+    --foreground: 200 30% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Game UI panels and cards */
+    --card: 240 20% 10%;
+    --card-foreground: 200 30% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 240 25% 8%;
+    --popover-foreground: 200 30% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Interactive elements */
+    --primary: 200 80% 60%;
+    --primary-foreground: 240 15% 5%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 260 25% 15%;
+    --secondary-foreground: 200 30% 90%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 240 20% 15%;
+    --muted-foreground: 200 15% 70%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 180 100% 70%;
+    --accent-foreground: 240 15% 5%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Borders and inputs */
+    --border: 240 25% 20%;
+    --input: 240 25% 12%;
+    --ring: 200 80% 60%;
+    
+    /* Gradients */
+    --gradient-space: linear-gradient(135deg, hsl(var(--space-void)), hsl(var(--space-deep)));
+    --gradient-nebula: linear-gradient(45deg, hsl(var(--space-deep)), hsl(var(--space-nebula)));
+    --gradient-carbon: radial-gradient(circle, hsl(var(--carbon-glow) / 0.3), transparent);
+    --gradient-energy: linear-gradient(90deg, hsl(var(--energy-core) / 0.5), hsl(var(--scanner-beam) / 0.5));
+    
+    /* Shadows and glows */
+    --shadow-cosmic: 0 0 30px hsl(var(--scanner-beam) / 0.3);
+    --shadow-carbon: 0 0 20px hsl(var(--carbon-glow) / 0.4);
+    --shadow-energy: 0 0 25px hsl(var(--energy-core) / 0.3);
 
     --radius: 0.5rem;
 
