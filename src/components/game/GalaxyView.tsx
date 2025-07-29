@@ -86,6 +86,8 @@ export const GalaxyView: React.FC<GalaxyViewProps> = ({ gameState, updateGameSta
     Math.abs(s.y) <= gameState.telescope.range
   );
 
+  const gridSize = gameState.telescope.range * 2 + 1;
+
   return (
     <div className="space-y-6">
       <Card className="p-6">
@@ -99,17 +101,18 @@ export const GalaxyView: React.FC<GalaxyViewProps> = ({ gameState, updateGameSta
           <div className="text-right">
             <div className="text-sm text-muted-foreground">Energy: {gameState.energy}/100</div>
             <div className="text-sm text-muted-foreground">Scan Cost: 10 Energy</div>
+            <div className="text-sm text-muted-foreground">Range: {gameState.telescope.range}</div>
             {gameState.telescope.scanning && (
               <div className="text-scanner-beam animate-pulse">Scanning...</div>
             )}
           </div>
         </div>
         
-        <div className="grid gap-1 max-w-4xl mx-auto" style={{ gridTemplateColumns: 'repeat(15, minmax(0, 1fr))' }}>
-          {Array.from({ length: 15 }, (_, y) => 
-            Array.from({ length: 15 }, (_, x) => {
-              const sectorX = x - 7;
-              const sectorY = 7 - y;
+        <div className="grid gap-1 max-w-4xl mx-auto" style={{ gridTemplateColumns: `repeat(${gridSize}, minmax(0, 1fr))` }}>
+          {Array.from({ length: gridSize }, (_, y) => 
+            Array.from({ length: gridSize }, (_, x) => {
+              const sectorX = x - gameState.telescope.range;
+              const sectorY = gameState.telescope.range - y;
               const sector = visibleSectors.find(s => s.x === sectorX && s.y === sectorY);
               const isScanning = gameState.telescope.scanning && gameState.scanningX === sectorX && gameState.scanningY === sectorY;
               
