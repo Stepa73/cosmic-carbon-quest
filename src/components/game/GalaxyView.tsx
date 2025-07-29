@@ -68,7 +68,6 @@ export const GalaxyView: React.FC<GalaxyViewProps> = ({ gameState, updateGameSta
     if (!sector.discovered) return 'bg-space-void';
     if (!sector.scanned) return 'bg-space-deep';
     if (sector.mining) return 'bg-rocket-flame';
-    if (sector.mined) return 'bg-muted/60'; // Show mined sectors as dimmed
     if (sector.marked) return 'bg-energy-core';
     
     const intensity = Math.floor(sector.carbonDensity / 25);
@@ -156,10 +155,6 @@ export const GalaxyView: React.FC<GalaxyViewProps> = ({ gameState, updateGameSta
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 bg-rocket-flame border border-border/20"></div>
             <span>Mining</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-muted/60 border border-border/20"></div>
-            <span>Mined</span>
           </div>
         </div>
       </Card>

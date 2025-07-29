@@ -49,12 +49,7 @@ export const RocketView: React.FC<RocketViewProps> = ({ gameState, updateGameSta
       );
 
       const updatedSectors = gameState.sectors.map(s =>
-        s.id === rocket.targetSector ? { 
-          ...s, 
-          mining: false, 
-          mined: true,
-          carbonDensity: Math.max(0, s.carbonDensity - 30) // Reduce carbon by 30%
-        } : s
+        s.id === rocket.targetSector ? { ...s, mining: false } : s
       );
 
       updateGameState({ 
