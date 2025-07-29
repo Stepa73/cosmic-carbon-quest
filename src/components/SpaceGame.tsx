@@ -47,7 +47,6 @@ export const SpaceGame = () => {
           if (rocket.launched && rocket.missionProgress < 100) {
             return {
               ...rocket,
-              fuel: Math.max(0, rocket.fuel - 1), // Consume fuel during mission
               missionProgress: Math.min(100, rocket.missionProgress + 2)
             };
           }
