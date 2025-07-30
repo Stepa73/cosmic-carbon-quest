@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 import { GameState, Rocket } from '@/types/game';
 
 interface RocketViewProps {
@@ -15,10 +14,22 @@ export const RocketView: React.FC<RocketViewProps> = ({ gameState, updateGameSta
     const sector = gameState.sectors.find(s => s.id === targetSectorId);
     
     if (!rocket || !sector || rocket.launched) return;
+    
+    // Check if rocket has enough fuel
+    if (rocket.fuel < 20) {
+      alert('Not enough fuel! Rocket needs at least 20 fuel to launch.');
+      return;
+    }
 
     const updatedRockets = gameState.rockets.map(r =>
       r.id === rocketId
-        ? { ...r, launched: true, targetSector: targetSectorId, missionProgress: 0 }
+        ? { 
+            ...r, 
+            launched: true, 
+            targetSector: targetSectorId, 
+            missionProgress: 0,
+            fuel: r.fuel - 20 // Consume fuel on launch
+          }
         : r
     );
 
@@ -44,7 +55,14 @@ export const RocketView: React.FC<RocketViewProps> = ({ gameState, updateGameSta
       
       const updatedRockets = gameState.rockets.map(r =>
         r.id === rocketId
-          ? { ...r, launched: false, targetSector: undefined, missionProgress: 0, cargo: Math.min(r.maxCargo, carbonCollected) }
+          ? { 
+              ...r, 
+              launched: false, 
+              targetSector: undefined, 
+              missionProgress: 0, 
+              cargo: Math.min(r.maxCargo, carbonCollected),
+              fuel: Math.max(0, r.fuel) // Keep remaining fuel
+            }
           : r
       );
 
@@ -63,6 +81,34 @@ export const RocketView: React.FC<RocketViewProps> = ({ gameState, updateGameSta
         carbon: gameState.carbon + carbonCollected 
       });
     }
+  };
+
+  const refuelRocket = (rocketId: string) => {
+    const rocket = gameState.rockets.find(r => r.id === rocketId);
+    if (!rocket || rocket.launched) return;
+    
+    const fuelCost = 50; // Cost to refuel
+    if (gameState.credits < fuelCost) {
+      alert('Not enough credits to refuel!');
+      return;
+    }
+    
+    const fuelToAdd = rocket.maxFuel - rocket.fuel;
+    if (fuelToAdd <= 0) {
+      alert('Rocket is already fully fueled!');
+      return;
+    }
+
+    const updatedRockets = gameState.rockets.map(r =>
+      r.id === rocketId
+        ? { ...r, fuel: r.maxFuel }
+        : r
+    );
+
+    updateGameState({ 
+      rockets: updatedRockets,
+      credits: gameState.credits - fuelCost
+    });
   };
 
   const unloadRocket = (rocketId: string) => {
@@ -125,20 +171,35 @@ export const RocketView: React.FC<RocketViewProps> = ({ gameState, updateGameSta
                     <span>Mission Progress</span>
                     <span>{Math.floor(rocket.missionProgress)}%</span>
                   </div>
-                  <Progress value={rocket.missionProgress} className="w-full" />
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div 
+                      className="bg-primary h-2 rounded-full transition-all duration-300" 
+                      style={{ width: `${rocket.missionProgress}%` }}
+                    />
+                  </div>
                   <div className="text-sm text-muted-foreground mt-1">
                     Target: Sector {rocket.targetSector}
                   </div>
                 </div>
               )}
 
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 {!rocket.launched && rocket.cargo > 0 && (
                   <Button
                     variant="outline"
                     onClick={() => unloadRocket(rocket.id)}
                   >
                     Unload Cargo
+                  </Button>
+                )}
+                
+                {!rocket.launched && rocket.fuel < rocket.maxFuel && (
+                  <Button
+                    variant="outline"
+                    onClick={() => refuelRocket(rocket.id)}
+                    className="text-energy-core"
+                  >
+                    ⛽ Refuel (50c)
                   </Button>
                 )}
                 
@@ -150,7 +211,7 @@ export const RocketView: React.FC<RocketViewProps> = ({ gameState, updateGameSta
                     Recall Rocket
                   </Button>
                 ) : (
-                  markedSectors.length > 0 && (
+                  markedSectors.length > 0 && rocket.fuel >= 20 && (
                     <select
                       className="px-3 py-2 bg-input border border-border rounded-md text-foreground mr-2"
                       onChange={(e) => e.target.value && launchRocket(rocket.id, e.target.value)}

@@ -9,16 +9,19 @@ export const generateInitialSectors = (): Sector[] => {
       const distance = Math.sqrt(x * x + y * y);
       const carbonDensity = Math.max(0, Math.random() * 100 - distance * 5);
       
+      // Only the center tile (0,0) starts as discovered and scanned
+      const isCenterTile = x === 0 && y === 0;
+      
       sectors.push({
         id: `${x},${y}`,
         x,
         y,
         carbonDensity,
-        scanned: distance <= 2, // Start with center sectors scanned
+        scanned: isCenterTile, // Only center tile starts scanned
         marked: false,
         mining: false,
         depth: Math.floor(Math.random() * 5) + 1,
-        discovered: distance <= 2,
+        discovered: isCenterTile, // Only center tile starts discovered
       });
     }
   }

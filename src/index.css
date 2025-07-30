@@ -19,6 +19,12 @@ All colors MUST be HSL for cosmic atmosphere.
     --rocket-flame: 25 95% 65%;
     --energy-core: 280 90% 75%;
     
+    /* Text colors for overlays */
+    --scanner-beam-foreground: 240 15% 5%;
+    --rocket-flame-foreground: 240 15% 5%;
+    --carbon-glow-foreground: 240 15% 5%;
+    --destructive-foreground: 0 0% 98%;
+    
     /* UI colors */
     --background: 240 15% 5%;
     --foreground: 200 30% 95%;
@@ -127,5 +133,373 @@ All colors MUST be HSL for cosmic atmosphere.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Enhanced Space Animations and Effects */
+@layer utilities {
+  /* Cosmic particle animations */
+  .animate-cosmic-float {
+    animation: cosmic-float 8s ease-in-out infinite;
+  }
+  
+  .animate-cosmic-float-delayed {
+    animation: cosmic-float 8s ease-in-out infinite 2s;
+  }
+  
+  .animate-cosmic-float-slow {
+    animation: cosmic-float 12s ease-in-out infinite;
+  }
+  
+  @keyframes cosmic-float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-10px) rotate(90deg); }
+    50% { transform: translateY(-5px) rotate(180deg); }
+    75% { transform: translateY(-15px) rotate(270deg); }
+  }
+  
+  /* Enhanced glow effects */
+  .glow-cosmic {
+    box-shadow: 
+      0 0 20px hsl(var(--scanner-beam) / 0.3),
+      0 0 40px hsl(var(--scanner-beam) / 0.1),
+      inset 0 0 20px hsl(var(--scanner-beam) / 0.1);
+  }
+  
+  .glow-carbon {
+    box-shadow: 
+      0 0 20px hsl(var(--carbon-glow) / 0.4),
+      0 0 40px hsl(var(--carbon-glow) / 0.2),
+      inset 0 0 20px hsl(var(--carbon-glow) / 0.1);
+  }
+  
+  .glow-energy {
+    box-shadow: 
+      0 0 20px hsl(var(--energy-core) / 0.4),
+      0 0 40px hsl(var(--energy-core) / 0.2),
+      inset 0 0 20px hsl(var(--energy-core) / 0.1);
+  }
+
+  .glow-destructive {
+    box-shadow: 
+      0 0 20px hsl(var(--destructive) / 0.4),
+      0 0 40px hsl(var(--destructive) / 0.2),
+      inset 0 0 20px hsl(var(--destructive) / 0.1);
+  }
+  
+  /* Pulsing glow animations */
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% { 
+      box-shadow: 0 0 20px hsl(var(--scanner-beam) / 0.3);
+    }
+    50% { 
+      box-shadow: 0 0 30px hsl(var(--scanner-beam) / 0.6);
+    }
+  }
+  
+  .animate-pulse-glow-carbon {
+    animation: pulse-glow-carbon 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-glow-carbon {
+    0%, 100% { 
+      box-shadow: 0 0 20px hsl(var(--carbon-glow) / 0.4);
+    }
+    50% { 
+      box-shadow: 0 0 30px hsl(var(--carbon-glow) / 0.8);
+    }
+  }
+  
+  .animate-pulse-glow-energy {
+    animation: pulse-glow-energy 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-glow-energy {
+    0%, 100% { 
+      box-shadow: 0 0 20px hsl(var(--energy-core) / 0.4);
+    }
+    50% { 
+      box-shadow: 0 0 30px hsl(var(--energy-core) / 0.8);
+    }
+  }
+  
+  /* Carbon sparkle animation */
+  .animate-carbon-sparkle {
+    animation: carbon-sparkle 3s ease-in-out infinite;
+  }
+  
+  @keyframes carbon-sparkle {
+    0%, 100% { 
+      opacity: 0.7;
+      transform: scale(1);
+    }
+    50% { 
+      opacity: 1;
+      transform: scale(1.2);
+    }
+  }
+  
+  /* Scanning beam effect */
+  .animate-scan-beam {
+    animation: scan-beam 2s linear infinite;
+  }
+  
+  @keyframes scan-beam {
+    0% { 
+      background: linear-gradient(90deg, transparent, hsl(var(--scanner-beam) / 0.8), transparent);
+      transform: translateX(-100%);
+    }
+    100% { 
+      background: linear-gradient(90deg, transparent, hsl(var(--scanner-beam) / 0.8), transparent);
+      transform: translateX(100%);
+    }
+  }
+
+  /* Rocket launch effect */
+  .animate-rocket-launch {
+    animation: rocket-launch 2s ease-out infinite;
+  }
+
+  @keyframes rocket-launch {
+    0% {
+      box-shadow: 0 0 0 0 hsl(var(--rocket-flame) / 0.8);
+      opacity: 0.6;
+      transform: scale(1);
+    }
+    25% {
+      box-shadow: 0 0 15px 6px hsl(var(--rocket-flame) / 0.6);
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    50% {
+      box-shadow: 0 0 25px 8px hsl(var(--rocket-flame) / 0.4);
+      opacity: 0.8;
+      transform: scale(1.1);
+    }
+    75% {
+      box-shadow: 0 0 15px 6px hsl(var(--rocket-flame) / 0.6);
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    100% {
+      box-shadow: 0 0 0 0 hsl(var(--rocket-flame) / 0.8);
+      opacity: 0.6;
+      transform: scale(1);
+    }
+  }
+  
+  /* Nebula background effect */
+  .nebula-bg {
+    background: 
+      radial-gradient(circle at 20% 80%, hsl(var(--space-nebula) / 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, hsl(var(--carbon-glow) / 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, hsl(var(--scanner-beam) / 0.1) 0%, transparent 50%);
+  }
+  
+  /* Unknown tile effects */
+  .unknown-tile {
+    background: linear-gradient(135deg, 
+      hsl(var(--space-void)) 0%, 
+      hsl(var(--space-deep)) 50%, 
+      hsl(var(--space-void)) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .unknown-tile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 30% 30%, hsl(var(--space-nebula) / 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, hsl(var(--space-void) / 0.3) 0%, transparent 50%);
+    animation: unknown-shimmer 4s ease-in-out infinite;
+  }
+  
+  .unknown-tile::after {
+    content: '?';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: hsl(var(--muted-foreground) / 0.5);
+    font-size: 0.75rem;
+    font-weight: bold;
+    opacity: 0.6;
+  }
+  
+  @keyframes unknown-shimmer {
+    0%, 100% { 
+      opacity: 0.3;
+      transform: scale(1);
+    }
+    50% { 
+      opacity: 0.6;
+      transform: scale(1.05);
+    }
+  }
+  
+  .unknown-tile:hover {
+    background: linear-gradient(135deg, 
+      hsl(var(--space-deep)) 0%, 
+      hsl(var(--space-nebula)) 50%, 
+      hsl(var(--space-deep)) 100%);
+    box-shadow: 0 0 15px hsl(var(--scanner-beam) / 0.2);
+  }
+  
+  /* Carbon background image effects */
+  .carbon-bg {
+    background-image: url('/carbon-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  .carbon-bg-low {
+    background-image: url('/carbon-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+  }
+  
+  .carbon-bg-medium {
+    background-image: url('/carbon-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+  }
+  
+  .carbon-bg-high {
+    background-image: url('/carbon-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.2;
+  }
+  
+  /* Carbon overlay effects */
+  .carbon-overlay-low {
+    background-color: rgba(0, 255, 255, 0.7);
+    mix-blend-mode: overlay;
+  }
+  
+  .carbon-overlay-medium {
+    background-color: rgba(0, 255, 255, 0.5);
+    mix-blend-mode: overlay;
+  }
+  
+  .carbon-overlay-high {
+    background-color: rgba(0, 255, 255, 0.3);
+    mix-blend-mode: overlay;
+  }
+  
+  .carbon-overlay-very-high {
+    background-color: rgba(0, 255, 255, 0.1);
+    mix-blend-mode: overlay;
+  }
+  
+  /* Responsive grid animations */
+  .grid-tile-enter {
+    animation: grid-tile-enter 0.5s ease-out;
+  }
+  
+  @keyframes grid-tile-enter {
+    0% { 
+      opacity: 0;
+      transform: scale(0.8) rotate(180deg);
+    }
+    100% { 
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+  }
+  
+  /* Hover effects for tiles */
+  .tile-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .tile-hover:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 
+      0 10px 25px -5px hsl(var(--scanner-beam) / 0.3),
+      0 4px 6px -1px hsl(var(--scanner-beam) / 0.1);
+  }
+  
+  /* Selected tile indicators */
+  .tile-selected {
+    border: 2px solid hsl(var(--scanner-beam));
+    box-shadow: 
+      0 0 15px hsl(var(--scanner-beam) / 0.4),
+      inset 0 0 10px hsl(var(--scanner-beam) / 0.1);
+    transform: scale(1.02);
+    z-index: 5;
+  }
+  
+  .tile-selected-carbon {
+    border: 2px solid hsl(var(--carbon-glow));
+    box-shadow: 
+      0 0 15px hsl(var(--carbon-glow) / 0.5),
+      inset 0 0 10px hsl(var(--carbon-glow) / 0.1);
+    transform: scale(1.02);
+    z-index: 5;
+  }
+  
+  .tile-selected-energy {
+    border: 2px solid hsl(var(--energy-core));
+    box-shadow: 
+      0 0 15px hsl(var(--energy-core) / 0.5),
+      inset 0 0 10px hsl(var(--energy-core) / 0.1);
+    transform: scale(1.02);
+    z-index: 5;
+  }
+  
+  /* Subtle pulsing for selected tiles */
+  .animate-selected-pulse {
+    animation: selected-pulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes selected-pulse {
+    0%, 100% { 
+      opacity: 1;
+      transform: scale(1.02);
+    }
+    50% { 
+      opacity: 0.9;
+      transform: scale(1.03);
+    }
+  }
+  
+  /* Cosmic text gradient */
+  .text-gradient-cosmic {
+    background: linear-gradient(135deg, hsl(var(--scanner-beam)), hsl(var(--carbon-glow)), hsl(var(--energy-core)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Backdrop blur for glass effect */
+  .glass-effect {
+    backdrop-filter: blur(10px);
+    background: hsl(var(--card) / 0.7);
+    border: 1px solid hsl(var(--border) / 0.3);
+  }
+  
+  /* Responsive spacing utilities */
+  .space-responsive {
+    @apply p-4 sm:p-6 lg:p-8;
+  }
+  
+  .tile-responsive {
+    @apply min-w-[2.5rem] min-h-[2.5rem] sm:min-w-[3rem] sm:min-h-[3rem] md:min-w-[3.5rem] md:min-h-[3.5rem] lg:min-w-[4rem] lg:min-h-[4rem];
   }
 }

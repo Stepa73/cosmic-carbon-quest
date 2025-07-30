@@ -1,73 +1,84 @@
-# Welcome to your Lovable project
+# 🌌 Cosmic Carbon Quest
 
-## Project info
+A space-themed idle game where you explore the galaxy, scan for carbon deposits, and build your mining empire.
 
-**URL**: https://lovable.dev/projects/06889917-1159-4c57-840c-f66550658a90
+## ✨ Features
 
-## How can I edit this code?
+### 🎮 Gameplay
+- **Galaxy Exploration**: Scan sectors to discover carbon deposits
+- **Mining Operations**: Launch rockets to mine marked sectors
+- **Market Trading**: Buy and sell carbon at fluctuating prices
+- **Technology Upgrades**: Improve your telescope and rocket fleet
 
-There are several ways of editing your application.
+### 🎨 Visual Enhancements
+- **Carbon Background Images**: Real carbon texture from [Tighten's game assets](https://game.tighten.com/storage/assets/carbon.jpg) with dynamic opacity based on carbon density
+- **Responsive Tiles**: Bigger, touch-friendly tiles that scale across all devices
+- **Cosmic Animations**: Particle effects, glowing elements, and smooth transitions
+- **Space Theme**: Deep space gradients, nebula backgrounds, and cosmic color palette
 
-**Use Lovable**
+### 🚀 Technical Features
+- **React + TypeScript**: Modern, type-safe development
+- **Tailwind CSS**: Utility-first styling with custom space theme
+- **Vite**: Fast development and build tooling
+- **Shadcn/ui**: Beautiful, accessible UI components
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/06889917-1159-4c57-840c-f66550658a90) and start prompting.
+## 🎯 Carbon Density Visualization
 
-Changes made via Lovable will be committed automatically to this repo.
+The game now uses a real carbon texture image that appears on tiles with carbon deposits:
 
-**Use your preferred IDE**
+- **Low Carbon (0-25%)**: Subtle carbon background with light cyan overlay
+- **Medium Carbon (25-50%)**: More visible carbon texture with medium overlay
+- **High Carbon (50-75%)**: Prominent carbon background with strong overlay
+- **Very High Carbon (75%+)**: Intense carbon texture with bright cyan overlay
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+The opacity and overlay intensity are dynamically calculated based on the carbon density percentage.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🛠️ Development
 
-Follow these steps:
+```bash
+# Install dependencies
+npm install
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
+
+# Build for production
+npm run build
 ```
 
-**Edit a file directly in GitHub**
+## 🎨 Customization
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The space theme uses HSL color variables for easy customization:
 
-**Use GitHub Codespaces**
+```css
+:root {
+  --space-void: 240 15% 5%;
+  --space-deep: 250 20% 8%;
+  --space-nebula: 260 25% 12%;
+  --carbon-glow: 180 100% 70%;
+  --scanner-beam: 200 80% 60%;
+  --rocket-flame: 25 95% 65%;
+  --energy-core: 280 90% 75%;
+}
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📱 Responsive Design
 
-## What technologies are used for this project?
+The game is fully responsive with:
+- **Mobile-first design**: Optimized for touch interactions
+- **Flexible grid system**: Adapts to different screen sizes
+- **Scalable tiles**: From 2.5rem on mobile to 4rem on large screens
+- **Touch-friendly**: Larger interactive elements for mobile devices
 
-This project is built with:
+## 🌟 Animations
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Enhanced with cosmic animations:
+- `animate-cosmic-float`: Floating particle effects
+- `glow-cosmic/carbon/energy`: Enhanced glow effects
+- `animate-carbon-sparkle`: Sparkling carbon particles
+- `animate-scan-beam`: Scanning beam animation
+- `tile-hover`: Smooth hover effects with lift and glow
 
-## How can I deploy this project?
+## 📄 License
 
-Simply open [Lovable](https://lovable.dev/projects/06889917-1159-4c57-840c-f66550658a90) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+This project is open source and available under the MIT License.

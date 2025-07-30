@@ -6,6 +6,7 @@ export interface Sector {
   scanned: boolean;
   marked: boolean;
   mining: boolean;
+  mined: boolean; // Whether the sector has been completely mined
   depth: number; // How deep the carbon is (affects scanning accuracy)
   discovered: boolean;
 }
